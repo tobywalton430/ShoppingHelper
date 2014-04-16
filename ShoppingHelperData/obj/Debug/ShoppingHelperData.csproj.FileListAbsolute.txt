@@ -1,0 +1,10 @@
+C:\Code\ShoppingHelper\ShoppingHelperData\bin\Debug\ShoppingHelperData.dll.config
+C:\Code\ShoppingHelper\ShoppingHelperData\bin\Debug\ShoppingHelperData.dll
+C:\Code\ShoppingHelper\ShoppingHelperData\bin\Debug\ShoppingHelperData.pdb
+C:\Code\ShoppingHelper\ShoppingHelperData\bin\Debug\EntityFramework.dll
+C:\Code\ShoppingHelper\ShoppingHelperData\bin\Debug\EntityFramework.SqlServer.dll
+C:\Code\ShoppingHelper\ShoppingHelperData\bin\Debug\EntityFramework.xml
+C:\Code\ShoppingHelper\ShoppingHelperData\bin\Debug\EntityFramework.SqlServer.xml
+C:\Code\ShoppingHelper\ShoppingHelperData\obj\Debug\ShoppingHelperData.csprojResolveAssemblyReference.cache
+C:\Code\ShoppingHelper\ShoppingHelperData\obj\Debug\ShoppingHelperData.dll
+C:\Code\ShoppingHelper\ShoppingHelperData\obj\Debug\ShoppingHelperData.pdb
