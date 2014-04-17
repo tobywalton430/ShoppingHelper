@@ -17,12 +17,12 @@ namespace ShoppingHelper.Controllers
             return View();
         }
 
-        public ActionResult ProductData()
-        {            
-            var products = Context.Products.ToList();            
+        public ActionResult ProductData(string search = "")
+        {
+            var products = Context.Products.Where(p => p.Name.ToLower().Contains(search)).Take(10);
 
             return Json(
-                products
+                    products
                     .Select(p => new { ID = p.ID, Name = p.Name })
                     .ToList()
                     .OrderBy(o => o.Name)

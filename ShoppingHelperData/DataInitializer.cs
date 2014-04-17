@@ -9,7 +9,7 @@ using ShoppingHelperData.Models;
 
 namespace ShoppingHelperData
 {
-    class DataInitializer : System.Data.Entity.DropCreateDatabaseAlways<DataContext>
+    class DataInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<DataContext>
     {
         protected override void Seed(DataContext context)
         {
@@ -22,16 +22,33 @@ namespace ShoppingHelperData
             categories.ForEach(thisCategory => context.Categories.AddOrUpdate(contextCategory => contextCategory.ID, thisCategory));
             context.SaveChanges();
 
-            var products = new List<Product> {
-                new Product { ID = 1, Name = "Apples", Description = "a", Category = context.Categories.First(c => c.Name == "Fruit & Veg") },
-                new Product { ID = 2, Name = "Oranges", Description = "a", Category = context.Categories.First(c => c.Name == "Fruit & Veg") },
-                new Product { ID = 3, Name = "Smoked Salmon", Description = "a", Category = context.Categories.First(c => c.Name == "Meat & Poultry") },
-                new Product { ID = 4, Name = "Minced Beef", Description = "a", Category = context.Categories.First(c => c.Name == "Meat & Poultry") },
-                new Product { ID = 5, Name = "Croissants", Description = "a", Category = context.Categories.First(c => c.Name == "Bakery") },
-                new Product { ID = 6, Name = "Muffins", Description = "a", Category = context.Categories.First(c => c.Name == "Bakery") }
-            };
+            //var products = new List<Product> {
+            //    new Product { ID = 1, Name = "Apples", Description = "a", Category = context.Categories.First(c => c.Name == "Fruit & Veg") },
+            //    new Product { ID = 2, Name = "Oranges", Description = "a", Category = context.Categories.First(c => c.Name == "Fruit & Veg") },
+            //    new Product { ID = 3, Name = "Smoked Salmon", Description = "a", Category = context.Categories.First(c => c.Name == "Meat & Poultry") },
+            //    new Product { ID = 4, Name = "Minced Beef", Description = "a", Category = context.Categories.First(c => c.Name == "Meat & Poultry") },
+            //    new Product { ID = 5, Name = "Croissants", Description = "a", Category = context.Categories.First(c => c.Name == "Bakery") },
+            //    new Product { ID = 6, Name = "Muffins", Description = "a", Category = context.Categories.First(c => c.Name == "Bakery") }
+            //};
 
-            products.ForEach(thisProduct => context.Products.AddOrUpdate(contextProduct => contextProduct.ID, thisProduct));
+            //products.ForEach(thisProduct => context.Products.AddOrUpdate(contextProduct => contextProduct.ID, thisProduct));
+
+            var category = context.Categories.First();
+            const int commitCount = 1000;            
+
+            for (int i = 1; i < 1000000; i++ )
+            {
+                context.Products.Add(                    
+                    new Product { ID = i, Category = category, Name = "Name " + i.ToString(), Description = "Description" }
+                );
+
+                var remainder = i % commitCount;
+                if (remainder == 0)
+                {
+                    context.SaveChanges();
+                }
+            }
+
             context.SaveChanges();
         }
     }

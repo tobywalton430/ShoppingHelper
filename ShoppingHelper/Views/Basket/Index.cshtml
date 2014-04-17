@@ -5,12 +5,9 @@
 
 <style type="text/css">
 
-
     .failfailfail {
         background-color: #ed9292;
     }
-
-
 
     input, button {
         outline: none;
@@ -64,26 +61,41 @@
         appViewModel.basketContents = ko.observableArray();
 
         appViewModel.getProductData = function () {
-            var options = {
-                url: "/Basket/ProductData",
-                type: "get"
-            };
 
-            $.ajax(options).done(function (data) {
-                appViewModel.productData(data);
-                $("#addProduct").autocomplete({
-                    source: function (request, response) {
-                        response($.grep(appViewModel.productData(), function (value) {
-                            return value.Name.toLowerCase().indexOf(request.term.toLowerCase()) >= 0
-                        }));
-                    },
-                    select: function (event, ui) {
-                        appViewModel.basketContents.push(ui.item);
-                    }
-                }).data("ui-autocomplete")._renderItem = function (ul, item) {
-                    return $("<li>").data("item.autocomplete", item).append("<a>" + item.Name + "</a>").appendTo(ul);
-                };
-            });
+            //$.ajax(options).done(function (data) {
+            //    appViewModel.productData(data);
+            //    $("#addProduct").autocomplete({
+            //        source: function (request, response) {
+            //            response($.grep(appViewModel.productData(), function (value) {
+            //                return value.Name.toLowerCase().indexOf(request.term.toLowerCase()) >= 0
+            //            }));
+            //        },
+            //        select: function (event, ui) {
+            //            appViewModel.basketContents.push(ui.item);
+            //        }
+            //    }).data("ui-autocomplete")._renderItem = function (ul, item) {
+            //        return $("<li>").data("item.autocomplete", item).append("<a>" + item.Name + "</a>").appendTo(ul);
+            //    };
+            //});
+
+            $("#addProduct").autocomplete({
+                source: function (request, response) {
+                    var options = {
+                        url: "/Basket/ProductData",
+                        type: "get",
+                        data: { search: request.term }
+                    };
+
+                    $.ajax(options).done(function (data) {
+                        response(data);
+                    });
+                },
+                select: function (event, ui) {
+                    //appViewModel.basketContents.push(ui.item);
+                }
+            }).data("ui-autocomplete")._renderItem = function (ul, item) {
+                return $("<li>").data("item.autocomplete", item).append("<a>" + item.Name + "</a>").appendTo(ul);
+            };
         }
 
         appViewModel.getCategoryData = function () {

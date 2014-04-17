@@ -13,6 +13,7 @@ namespace ShoppingHelperData
     {
         public DataContext() : base("ShoppingConnection123")
         {
+            this.Configuration.AutoDetectChangesEnabled = false; // BIG increase in performance when doing bulk inserts!
         }
 
         public DbSet<Category> Categories { get; set; }
